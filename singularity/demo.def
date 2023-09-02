@@ -1,0 +1,9 @@
+BootStrap: localimage
+From: /sw/external/NGC/pytorch_22.09-py3.sif
+
+%post
+    pip install numpy
+    pip freeze
+
+%runscript
+    echo "----- Demo Image ----------"
