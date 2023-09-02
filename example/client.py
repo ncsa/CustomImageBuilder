@@ -1,4 +1,4 @@
-from globus_compute_sdk import Client, Executor
+from globus_compute_sdk import Client
 
 gcc = Client()
 ENDPOINT_ID = "01e21ddf-6eb4-41db-8e1d-2bcfe0c8314f"
@@ -28,7 +28,7 @@ def main():
     container_id = gcc.register_container(container_path, "singularity")
     print("Container Id", container_id)
 
-    # Run your custom_function using using custom_image
+    # Run your custom_function using custom_image
     #
     # #Execute sample function using custom_image
     # with Executor(endpoint_id=ENDPOINT_ID, container_id=container_id) as gce:
