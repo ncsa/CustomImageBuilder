@@ -67,11 +67,11 @@ From: {{ base_image }}
 
     stdout, stderr = process.communicate()
 
-    return "Output logs are as follows: \n" + str(stderr) + " \n" + str(stdout), os.getcwd() +"/img.sif"
+    return f"Output logs are as follows: \n {str(stderr)}  \n {str(stdout)}  {os.getcwd() } / {build_image_file_name}"
 
 
 def main():
-    func_uuid = gcc.register_function(build_image)
+    func_uuid = gcc.register_function(build_image, public=True)
     print("The function uuid", func_uuid)
 
 
