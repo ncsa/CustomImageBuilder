@@ -1,6 +1,9 @@
 from time import sleep
 from globus_compute_sdk import Executor, Client
 
+from custom_image_builder.exception.ImageBuilderException import ImageBuilderException
+from custom_image_builder.exception.RegisterImageException import RegisterImageException
+
 
 def funcx_build_image(image_file_name, base_image_type, base_image,
                       payload_url, pip_packages, conda_packages, apt_packages):
@@ -84,7 +87,7 @@ def register_container(image_file_path, gcc):
         return container_id
 
     except Exception as ex:
-        raise Exception(ex)
+        raise RegisterImageException(ex)
 
 
 def build_image(gc_executor,
@@ -109,7 +112,7 @@ def build_image(gc_executor,
         logs, image_file_path = fut.result()
         return image_file_path
     except Exception as ex:
-        raise Exception(ex)
+        raise ImageBuilderException(ex)
 
 
 def build_and_register_container(endpoint_id,
