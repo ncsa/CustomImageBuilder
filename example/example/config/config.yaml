@@ -1,0 +1,8 @@
+display_name: None
+engine:
+  provider:
+    init_blocks: 1
+    max_blocks: 1
+    min_blocks: 0
+    type: LocalProvider
+  type: HighThroughputEngine
