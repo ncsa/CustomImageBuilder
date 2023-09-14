@@ -13,7 +13,7 @@ class TestImageBuilder(unittest.TestCase):
         gcc.register_container.side_effect =  Exception("Failed to register image, Globus Compute error")
 
         with self.assertRaises(RegisterImageException):
-            register_container("jkb", gcc)
+            register_container("container_file_path", gcc)
 
     def test_build_image_raise_exception(self):
         fut = Mock()

@@ -1,4 +1,4 @@
-from custom_image_builder.image_builder import build_and_register_container
+from custom_image_builder import build_and_register_container
 
 
 def main():
