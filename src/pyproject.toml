@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "custom-image-builder"
 version = "0.1.0"
-description = ""
+description = "A python package that enables user to build their custom singularity image on HPC cluster"
 authors = ["ritwik-deshpande <ritwikdeshpande01@gmail.com>"]
 readme = "README.md"
 packages = [{include = "custom_image_builder"}]

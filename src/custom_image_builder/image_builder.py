@@ -95,6 +95,18 @@ def build_image(gc_executor,
                 base_image_type,
                 base_image,
                 payload_url, pip_packages, conda_packages, apt_packages):
+    """Calls Globus compute executor which Builds apptainer/singularity image on Delta using funcX, return path of the image and logs
+
+    :param gc_executor:
+    :param apt_packages:
+    :param conda_packages:
+    :param pip_packages:
+    :param payload_url:
+    :param base_image:
+    :param image_file_name:
+    :param base_image_type:
+    :return: image_file_path
+    """
     try:
         fut = gc_executor.submit(funcx_build_image,
                                  image_file_name,
@@ -123,6 +135,18 @@ def build_and_register_container(endpoint_id,
                                  pip_packages=None,
                                  conda_packages=None,
                                  apt_packages=None):
+    """Calls Globus compute executor and client which Builds apptainer/singularity image on Delta using funcX, and
+    registers the image returning the container id
+
+        :param endpoint_id:
+        :param apt_packages:
+        :param conda_packages:
+        :param pip_packages:
+        :param payload_url:
+        :param base_image:
+        :param image_file_name:
+        :param base_image_type:
+        :return: container_id """
     gc_executor = Executor(endpoint_id=endpoint_id)
     gcc = Client()
 
