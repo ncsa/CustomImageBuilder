@@ -270,20 +270,6 @@ files = [
 test = ["pytest (>=6)"]
 
 [[package]]
-name = "funcx"
-version = "2.3.1"
-description = "Globus Compute: High Performance Function Serving for Science"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "funcx-2.3.1-py3-none-any.whl", hash = "sha256:556a577e44356b8eff4f68980ff06ccf7c86636521cf484c3ea6777618f00eb5"},
-    {file = "funcx-2.3.1.tar.gz", hash = "sha256:e75b3736b9df39e3cec15a8e5f88f7d465fe75e0dc6597269f1c1831aafad07e"},
-]
-
-[package.dependencies]
-globus-compute-sdk = "2.3.1"
-
-[[package]]
 name = "globus-compute-common"
 version = "0.2.0"
 description = "Common tools for Globus Compute projects"
@@ -305,13 +291,13 @@ redis = ["redis (>=3.5.3,<5)"]
 
 [[package]]
 name = "globus-compute-sdk"
-version = "2.3.1"
+version = "2.3.2"
 description = "Globus Compute: High Performance Function Serving for Science"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "globus-compute-sdk-2.3.1.tar.gz", hash = "sha256:4699de0da69638f5f2f09782e07527940b20cdaeaec1f7476774678cef2e663a"},
-    {file = "globus_compute_sdk-2.3.1-py3-none-any.whl", hash = "sha256:50b91f291d6184137669f6f1ecd841ef3424b77ba1efad7c8eccfe3913677c95"},
+    {file = "globus-compute-sdk-2.3.2.tar.gz", hash = "sha256:544c73f2a3e2c4ae5926aa8ff6a4e2a41446461c0d44d2a31d096c4d2556094a"},
+    {file = "globus_compute_sdk-2.3.2-py3-none-any.whl", hash = "sha256:27c2aa6eedef7a6f95002bd445d9a1b9ad2ed1df15aa66ed54b77bdac7a23aa1"},
 ]
 
 [package.dependencies]
@@ -747,4 +733,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "bc600e27a8f1f9a2410d11362c24484bbad98664706c61e858dc96886f7030d1"
+content-hash = "e898f928e96a25f48db3c9243c2347757b1f535645d74f89564cd1aa4d892124"
