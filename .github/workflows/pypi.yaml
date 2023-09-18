@@ -1,0 +1,38 @@
+name: Push to PyPI
+on:
+  release:
+    types: [released, prereleased]
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9 - 3.11'
+    - name: Install poetry
+      uses: abatilo/actions-poetry@v2
+      with:
+        poetry-version: 1.2.2
+    - name: Install dependencies
+      run: |
+        cd src/
+        poetry install --no-root
+        pip list
+    - name: Set env
+      run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+    - name: Test
+      run: |
+        echo $RELEASE_VERSION
+        echo ${{ env.RELEASE_VERSION }}
+    - name: Update Version
+      run: |
+        poetry version ${{ env.RELEASE_VERSION }}
+    - name: Build Library
+      run: |
+        poetry build
+    - name: Publish to PyPI
+      run: |
+        poetry config pypi-token.pypi ${{ secrets.pypi_password_funcx }}
+        poetry publish
