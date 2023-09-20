@@ -5,9 +5,14 @@ from custom_image_builder.exception.ImageBuilderException import ImageBuilderExc
 from custom_image_builder.exception.RegisterImageException import RegisterImageException
 
 
-def funcx_build_image(image_file_name, base_image_type, base_image,
-                      payload_url, pip_packages, conda_packages, apt_packages):
-    """Builds apptainer/singularity image on Delta using funcX, return path of the image and logs
+def funcx_build_image(image_file_name: str,
+                      base_image_type: str,
+                      base_image: str,
+                      payload_url: str,
+                      pip_packages: list,
+                      conda_packages: list,
+                      apt_packages: list) -> (str, str):
+    """Builds apptainer/singularity image on HPC cluster using funcX, return path of the image and logs
 
     :param apt_packages:
     :param conda_packages:
@@ -49,7 +54,6 @@ From: {{ base_image }}
     {% endif %}
 
 %runscript
-    echo "----- Demo Image ----------"
     """
 
     template_str = Template(build_file)
@@ -76,7 +80,7 @@ From: {{ base_image }}
 
     stdout, stderr = process.communicate()
 
-    return f"Output logs are as follows: \n {str(stderr)}  \n {str(stdout)}",  f"{os.getcwd()}/{build_image_file_name}"
+    return f"Output logs are as follows: \n {str(stderr)}  \n {str(stdout)}", f"{os.getcwd()}/{build_image_file_name}"
 
 
 def register_container(image_file_path, gcc):
@@ -90,12 +94,15 @@ def register_container(image_file_path, gcc):
         raise RegisterImageException(ex)
 
 
-def build_image(gc_executor,
-                image_file_name,
-                base_image_type,
-                base_image,
-                payload_url, pip_packages, conda_packages, apt_packages):
-    """Calls Globus compute executor which Builds apptainer/singularity image on Delta using funcX, return path of the image and logs
+def build_image(gc_executor: Executor,
+                image_file_name: str,
+                base_image_type: str,
+                base_image: str,
+                payload_url: str,
+                pip_packages: list,
+                conda_packages: list,
+                apt_packages: list) -> str:
+    """Calls Globus compute executor which Builds apptainer/singularity image on HPC cluster using funcX, return path of the image and logs
 
     :param gc_executor:
     :param apt_packages:
@@ -127,17 +134,19 @@ def build_image(gc_executor,
         raise ImageBuilderException(ex)
 
 
-def build_and_register_container(endpoint_id,
-                                 image_file_name,
-                                 base_image_type,
-                                 base_image,
-                                 payload_url=None,
-                                 pip_packages=None,
-                                 conda_packages=None,
-                                 apt_packages=None):
-    """Calls Globus compute executor and client which Builds apptainer/singularity image on Delta using funcX, and
+def build_and_register_container(gcc_client: Client,
+                                 endpoint_id: str,
+                                 image_file_name: str,
+                                 base_image_type: str,
+                                 base_image: str,
+                                 payload_url: str = None,
+                                 pip_packages: list = None,
+                                 conda_packages: list = None,
+                                 apt_packages: list = None) -> str:
+    """Calls Globus compute executor and client which Builds apptainer/singularity image on HPC cluster using funcX, and
     registers the image returning the container id
 
+        :param gcc_client:
         :param endpoint_id:
         :param apt_packages:
         :param conda_packages:
@@ -148,7 +157,6 @@ def build_and_register_container(endpoint_id,
         :param base_image_type:
         :return: container_id """
     gc_executor = Executor(endpoint_id=endpoint_id)
-    gcc = Client()
 
     image_file_path = build_image(gc_executor,
                                   image_file_name,
@@ -159,11 +167,4 @@ def build_and_register_container(endpoint_id,
                                   conda_packages,
                                   apt_packages)
 
-    return register_container(image_file_path, gcc)
-
-
-# if __name__ == '__main__':
-#     container_id = build_and_register_container("01e21ddf-6eb4-41db-8e1d-2bcfe0c8314f",
-#                                                 "test-image", "docker", "python:3.8")
-#
-#     print("Container id ", container_id)
+    return register_container(image_file_path, gcc_client)
