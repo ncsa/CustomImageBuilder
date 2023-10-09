@@ -159,7 +159,7 @@ def build_and_register_container(gcc_client: Client,
         :param image_file_name:
         :param base_image_type:
         :return: container_id """
-    gc_executor = Executor(endpoint_id=endpoint_id)
+    gc_executor = Executor(endpoint_id=endpoint_id, funcx_client=gcc_client)
 
     image_file_path = build_image(gc_executor,
                                   image_file_name,
