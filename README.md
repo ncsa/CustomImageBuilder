@@ -15,7 +15,7 @@ returns the container id which would be used by the globus-compute executor to e
 ## Prerequisite.
 A [globus-compute-endpoint](https://globus-compute.readthedocs.io/en/latest/endpoints.html) setup on HPC cluster.
 
-The following steps can be used to create an endpoint, you can modify the configurations based on your use-case:
+The following steps can be used to create an endpoint on the NCSA Delta Cluster, you can modify the configurations based on your use-case:
 
 1. Create a conda virtual env. We have created a ```custom-image-builder``` conda env on the delta cluster as follows:
 ```shell
