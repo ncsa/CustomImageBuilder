@@ -1,5 +1,6 @@
 from custom_image_builder import build_and_register_container
 from globus_compute_sdk import Client, Executor
+from globus_compute_sdk.serialize import DillCodeSource
 
 
 def transform():
@@ -14,7 +15,7 @@ def transform():
 
 def main():
     image_builder_endpoint = "bc106b18-c8b2-45a3-aaf0-75eebc2bef80"
-    gcc_client = Client()
+    gcc_client = Client(code_serialization_strategy=DillCodeSource())
 
     container_id = build_and_register_container(gcc_client=gcc_client,
                                                 endpoint_id=image_builder_endpoint,
