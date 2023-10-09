@@ -13,7 +13,7 @@ def transform():
 
 
 def main():
-    image_builder_endpoint = "81b21a94-0e18-457d-98b5-05672a8a3b60"
+    image_builder_endpoint = "bc106b18-c8b2-45a3-aaf0-75eebc2bef80"
     gcc_client = Client()
 
     container_id = build_and_register_container(gcc_client=gcc_client,
@@ -25,10 +25,8 @@ def main():
 
     print("The container id is", container_id)
 
-    example_endpoint = "0b4e042b-edd5-4951-9ce5-6608c2ef6cb8"
-
-    with Executor(endpoint_id=example_endpoint,
-                  container_id="791a75b4-c2bd-40f1-85e0-ba17458c233b") as ex:
+    with Executor(endpoint_id=image_builder_endpoint,
+                  container_id=container_id) as ex:
         fut = ex.submit(transform)
 
     print(fut.result())
