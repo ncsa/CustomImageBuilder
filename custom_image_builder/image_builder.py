@@ -1,4 +1,3 @@
-from time import sleep
 from globus_compute_sdk import Executor, Client
 
 from custom_image_builder.exception.ImageBuilderException import ImageBuilderException
@@ -127,8 +126,9 @@ def build_image(gc_executor: Executor,
                                      pip_packages,
                                      conda_packages,
                                      apt_packages)
-
-        logs, image_file_path = fut.result()
+        op = fut.result()
+        print(op)
+        logs, image_file_path = op
         return image_file_path
     except Exception as ex:
         raise ImageBuilderException(ex)

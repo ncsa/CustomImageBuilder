@@ -16,6 +16,8 @@ returns the container id which would be used by the globus-compute executor to e
 A [globus-compute-endpoint](https://globus-compute.readthedocs.io/en/latest/endpoints.html) setup on HPC cluster.
 
 The following steps can be used to create an endpoint on the NCSA Delta Cluster, you can modify the configurations based on your use-case:
+## Note.
+For the following to work we must use the globus-compute-sdk version of 2.2.0 while setting up our endpoint.
 
 1. Create a conda virtual env. We have created a ```custom-image-builder``` conda env on the delta cluster as follows:
 ```shell
@@ -24,8 +26,6 @@ conda create --name custom-image-builder python=3.11
 conda activate custom-image-builder
 
 pip install globus-compute-endpoint==2.2.0
-
-pip install custom-image-builder
 ```
 
 2. Creating a globus-compute endpoint:
@@ -151,7 +151,5 @@ def main():
 
 
 ## Note.
-For the following example to work we must use the globus-compute-sdk version of 2.2.0 while setting up our endpoint.
-
 The singularity image require globus-compute-endpoint as one of its packages in-order to run the workers as our custom 
 singularity container, hence by default we require python as part of the image inorder to install globus-compute-endpoint. 

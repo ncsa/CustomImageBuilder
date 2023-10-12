@@ -1,10 +1,7 @@
 name: Push to PyPI
 on:
-  push:
-    branches:
-      - feature-prepare-for-release
-#  release:
-#    types: [released, prereleased]
+  release:
+    types: [released, prereleased]
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -31,8 +28,7 @@ jobs:
       run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
     - name: Update Library Version
       run: |
-        poetry version 0.1.4
-#        poetry version ${{ env.RELEASE_VERSION }}
+        poetry version ${{ env.RELEASE_VERSION }}
     - name: Build Library
       run: |
         poetry build
