@@ -118,17 +118,18 @@ def build_image(gc_executor: Executor,
     :return: image_file_path
     """
     try:
-        fut = gc_executor.submit(funcx_build_image,
-                                 image_file_name,
-                                 base_image_type,
-                                 base_image,
-                                 payload_url,
-                                 pip_packages,
-                                 conda_packages,
-                                 apt_packages)
-        with fut as result:
-            logs, image_file_path = result.result()
-            return image_file_path
+        with gc_executor as ex:
+            fut = ex.submit(funcx_build_image,
+                                     image_file_name,
+                                     base_image_type,
+                                     base_image,
+                                     payload_url,
+                                     pip_packages,
+                                     conda_packages,
+                                     apt_packages)
+
+        logs, image_file_path = fut.result()
+        return image_file_path
     except Exception as ex:
         raise ImageBuilderException(ex)
 
