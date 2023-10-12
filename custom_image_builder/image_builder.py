@@ -126,13 +126,9 @@ def build_image(gc_executor: Executor,
                                  pip_packages,
                                  conda_packages,
                                  apt_packages)
-
-        # Wait till future is completed poll every 30 sec
-        while not fut.done():
-            sleep(30)
-
-        logs, image_file_path = fut.result()
-        return image_file_path
+        with fut as result:
+            logs, image_file_path = result.result()
+            return image_file_path
     except Exception as ex:
         raise ImageBuilderException(ex)
 
