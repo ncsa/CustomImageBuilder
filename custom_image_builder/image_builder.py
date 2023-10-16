@@ -97,7 +97,7 @@ def register_container(image_file_path, gcc):
         raise RegisterImageException(ex)
 
 def redef_in_main(obj):
-    """Helper: redefine an object in __main__, e.g. garden_ai._Model -> __main__._Model.
+    """Helper: redefine an object in __main__
 
     This has the effect of coaxing dill into serializing both the definition and
     the instance of an object together (in the case of a class), so it can be
@@ -109,10 +109,6 @@ def redef_in_main(obj):
     This works because dill is smart enough to know that if you defined a class
     interactively (like in a repl) then it can't expect that definition to be
     available after the session exits, so has to include it.
-
-    The upshot is that we can embed stuff like the _Model class as an implicit part of
-    the "function" that we register with globus compute, so there won't be any
-    garden-specific dependencies users need to worry about in the container.
     """
 
     # make sure it's not already in main
