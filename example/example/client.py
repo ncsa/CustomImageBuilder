@@ -15,7 +15,7 @@ def transform():
 
 def main():
     image_builder_endpoint = "bc106b18-c8b2-45a3-aaf0-75eebc2bef80"
-    gcc_client = Client(code_serialization_strategy=DillCodeSource())
+    gcc_client = Client()
 
     container_id = build_and_register_container(gcc_client=gcc_client,
                                                 endpoint_id=image_builder_endpoint,

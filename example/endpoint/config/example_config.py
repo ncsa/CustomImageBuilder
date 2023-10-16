@@ -8,7 +8,7 @@ from globus_compute_endpoint.executors import HighThroughputExecutor
 
 user_opts = {
     'delta': {
-        'worker_init': 'conda activate custom-image-builder',
+        'worker_init': 'conda activate custom-image-builder-py-3.9',
         'scheduler_options': '#SBATCH --account=bbmi-delta-cpu',
     }
 }

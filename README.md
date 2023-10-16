@@ -18,10 +18,11 @@ A [globus-compute-endpoint](https://globus-compute.readthedocs.io/en/latest/endp
 The following steps can be used to create an endpoint on the NCSA Delta Cluster, you can modify the configurations based on your use-case:
 ## Note.
 For the following to work we must use the globus-compute-sdk version of 2.2.0 while setting up our endpoint.
+It is recommended to use python3.9 for setting up the endpoint and as the client
 
 1. Create a conda virtual env. We have created a ```custom-image-builder``` conda env on the delta cluster as follows:
 ```shell
-conda create --name custom-image-builder python=3.11
+conda create --name custom-image-builder-py-3.9 python=3.9
 
 conda activate custom-image-builder
 
@@ -47,7 +48,7 @@ from globus_compute_endpoint.executors import HighThroughputExecutor
 
 user_opts = {
     'delta': {
-        'worker_init': 'conda activate custom-image-builder',
+        'worker_init': 'conda activate custom-image-builder-py-3.9',
         'scheduler_options': '#SBATCH --account=bbmi-delta-cpu',
     }
 }
