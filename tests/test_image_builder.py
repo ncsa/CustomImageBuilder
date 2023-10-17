@@ -1,5 +1,6 @@
 import unittest
 from unittest.mock import Mock
+from unittest.mock import MagicMock
 
 from custom_image_builder.image_builder import build_image, register_container
 from custom_image_builder.exception.RegisterImageException import RegisterImageException
@@ -17,7 +18,6 @@ class TestImageBuilder(unittest.TestCase):
 
     def test_build_image_raise_exception(self):
         fut = Mock()
-        fut.done.return_value = True
         fut.result.side_effect = Exception("Failed to build image, Globus Compute error")
         gc_executor = Mock()
         gc_executor.submit.return_value = fut
@@ -33,11 +33,8 @@ class TestImageBuilder(unittest.TestCase):
                         conda_packages=None)
 
     def test_build_image(self):
-        fut = Mock()
-        fut.done.return_value = True
-        fut.result.return_value = "logs", "container_path"
-        gc_executor = Mock()
-        gc_executor.submit.return_value = fut
+        gc_executor = MagicMock()
+        gc_executor.__enter__.return_value.submit.return_value.result.return_value = ("logs", "container_path")
         container_id = build_image(gc_executor,
                                    "test-image",
                                    "docker",
@@ -46,6 +43,7 @@ class TestImageBuilder(unittest.TestCase):
                                    pip_packages=["pandas"],
                                    apt_packages=None,
                                    conda_packages=None)
+
 
         print("The container id is:", container_id)
 
