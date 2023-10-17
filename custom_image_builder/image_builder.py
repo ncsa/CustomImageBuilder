@@ -81,9 +81,10 @@ From: {{ base_image }}
         shell=True
     )
 
+    exit_code = process.wait()
     stdout, stderr = process.communicate()
 
-    return f"Output logs are as follows: \n {str(stderr)}  \n {str(stdout)}", f"{os.getcwd()}/{build_image_file_name}.sif"
+    return f"Output logs are as follows: \n {str(stderr)}  \n {str(stdout)}", f"{os.getcwd()}/{build_image_file_name}.sif", exit_code
 
 
 def register_container(image_file_path, gcc):
@@ -151,9 +152,12 @@ def build_image(gc_executor: Executor,
                                      pip_packages,
                                      conda_packages,
                                      apt_packages)
-        op = fut.result()
-        print(op)
-        logs, image_file_path = op
+
+        logs, image_file_path, exit_code = fut.result()
+
+        if exit_code != 0:
+            raise ImageBuilderException(f"Failed to build image,  {logs}")
+
         return image_file_path
     except Exception as ex:
         raise ImageBuilderException(ex)
