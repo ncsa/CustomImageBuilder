@@ -13,6 +13,7 @@ class TestImageBuilder(unittest.TestCase):
         gcc = Mock()
         gcc.register_container.side_effect = Exception("Failed to register image, Globus Compute error")
 
+
         with self.assertRaises(RegisterImageException):
             register_container("container_file_path", gcc)
 
@@ -35,6 +36,7 @@ class TestImageBuilder(unittest.TestCase):
     def test_build_image(self):
         gc_executor = MagicMock()
         gc_executor.__enter__.return_value.submit.return_value.result.return_value = ("logs", "container_path", 0)
+
         container_id = build_image(gc_executor,
                                    "test-image",
                                    "docker",
@@ -61,6 +63,7 @@ class TestImageBuilder(unittest.TestCase):
                         pip_packages=["pandas"],
                         apt_packages=None,
                         conda_packages=None)
+
 
     def test_register_container(self):
         gcc = Mock()
